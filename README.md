@@ -15,55 +15,7 @@ Mini-Netflix/Twitch clone with distributed transcoding.
 
 ---
 
-## Quick Start
 
-### Step 1 — AWS Setup
-```bash
-# Create S3 buckets
-aws s3 mb s3://your-raw-videos-bucket --region ap-south-1
-aws s3 mb s3://your-processed-videos-bucket --region ap-south-1
-
-# Create SQS FIFO queue
-aws sqs create-queue \
-  --queue-name transcode-queue.fifo \
-  --attributes FifoQueue=true,ContentBasedDeduplication=true \
-  --region ap-south-1
-```
-Then create a CloudFront distribution pointing to your processed bucket.
-
-### Step 2 — Configure .env
-Edit `.env` with your actual AWS credentials and resource names.
-
-### Step 3 — Start Everything
-```bash
-docker-compose up --build -d
-```
-
-### Step 4 — Run Migrations
-```bash
-docker-compose exec django_app python manage.py migrate
-```
-
-### Step 5 — Start React Frontend
-```bash
-cd frontend
-npm install
-npm start
-```
-
----
-
-## Services & Ports
-| Service        | Port | URL                        |
-|---------------|------|----------------------------|
-| React Frontend | 3000 | http://localhost:3000      |
-| Node.js API    | 5000 | http://localhost:5000      |
-| Django         | 8000 | http://localhost:8000      |
-| Flower Monitor | 5555 | http://localhost:5555      |
-| PostgreSQL     | 5432 | localhost:5432             |
-| Redis          | 6379 | localhost:6379             |
-
----
 
 ## Video Upload Flow
 ```
